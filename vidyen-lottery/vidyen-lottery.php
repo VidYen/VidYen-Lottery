@@ -31,39 +31,54 @@ function videyen_lottery_sql_install()
 
 		$charset_collate = $wpdb->get_charset_collate(); //Still haven't figured out the reason i need thi sline
 
-		//NOTE: I have the mind to make mediumint to int, but I wonder if you get 8 million log transactios that you should consider another solution than VYPS.
+		//VidYen Lotto game settings. NOTE: I will make the id increment here.
+    $table_vidyen_lottery_settings = $wpdb->prefix . 'vidyen_lottery_settings';
 
-		//vyps_points table creation
-    $table_name_points = $wpdb->prefix . 'vyps_points';
+    $sql = "CREATE TABLE {$table_vidyen_lottery_settings} (
+			id mediumint(9) NOT NULL AUTO_INCREMENT,
+			time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+			time_range smallint(9) NOT NULL,
+			start_time smallint(9) NOT NULL,
+			default_pot double(64, 0) NOT NULL,
+			PRIMARY KEY  (id)
+    ) {$charset_collate};";
 
-    $sql = "CREATE TABLE {$table_name_points} (
-		id mediumint(9) NOT NULL AUTO_INCREMENT,
-		time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
-		name tinytext NOT NULL,
-		icon text NOT NULL,
-		PRIMARY KEY  (id)
-        ) {$charset_collate};";
+		//I'm putting in some dickery here. Numbers are determined before hand when game is saved and the game time is saved in advance and has to be waited out.
+		//Probaly a terrible idea, but the admins could litterally change the results I guess. (or if they have poor security someone could see results)
+		//When the time is up and the php runs then it is decided and then the next game is created based on settings. Perhaps should have an end game.
+
+		$table_vidyen_lottery_games = $wpdb->prefix . 'vidyen_lottery_games';
+
+		$sql .= "CREATE TABLE {$table_vidyen_lottery_games} (
+			id mediumint(9) NOT NULL AUTO_INCREMENT,
+			user_id mediumint(9) NOT NULL,
+			time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+			current_pot double(64, 0) NOT NULL,
+			vy_win_ticket_1 mediumint(9) NOT NULL,
+			vy_win_ticket_2 mediumint(9) NOT NULL,
+			vy_win_ticket_3 mediumint(9) NOT NULL,
+			vy_win_ticket_4 mediumint(9) NOT NULL,
+			vy_win_ticket_5 mediumint(9) NOT NULL,
+			vy_win_ticket_6 mediumint(9) NOT NULL,
+			PRIMARY KEY  (id)
+		) {$charset_collate};";
 
 		//vyps_points_log. Notice how I loath th keep variable names the same in recycled code.
 		//Visualization people. It's better for code to be ineffecient but readable than efficient and unreadable.
-    $table_name_points_log = $wpdb->prefix . 'vyps_points_log';
+    $table_vidyen_lottery_tickets = $wpdb->prefix . 'vidyen_lottery_tickets';
 
-    $sql .= "CREATE TABLE {$table_name_points_log} (
-		id mediumint(9) NOT NULL AUTO_INCREMENT,
-                reason varchar(128) NOT NULL,
-                user_id mediumint(9) NOT NULL,
-		time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
-		point_id varchar(11) NOT NULL,
-                points_amount double(64, 0) NOT NULL,
-                adjustment varchar(100) NOT NULL,
-								vyps_meta_id varchar(64) NOT NULL,
-								vyps_meta_data varchar(128) NOT NULL,
-								vyps_meta_amount double(64,0) NOT NULL,
-								vyps_meta_subid1 mediumint(9) NOT NULL,
-								vyps_meta_subid2 mediumint(9) NOT NULL,
-								vyps_meta_subid3 mediumint(9) NOT NULL,
-		PRIMARY KEY  (id)
-        ) {$charset_collate};";
+    $sql .= "CREATE TABLE {$table_vidyen_lottery_tickets} (
+			id mediumint(9) NOT NULL AUTO_INCREMENT,
+	    user_id mediumint(9) NOT NULL,
+			time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+			vy_ticket_1 mediumint(9) NOT NULL,
+			vy_ticket_2 mediumint(9) NOT NULL,
+			vy_ticket_3 mediumint(9) NOT NULL,
+			vy_ticket_4 mediumint(9) NOT NULL,
+			vy_ticket_5 mediumint(9) NOT NULL,
+			vy_ticket_6 mediumint(9) NOT NULL,
+			PRIMARY KEY  (id)
+    ) {$charset_collate};";
 
     require_once (ABSPATH . 'wp-admin/includes/upgrade.php'); //I am concerned that this used ABSPATH rather than the normie WP methods
 
