@@ -1,0 +1,11 @@
+RemoteFaucetSurferReward.box_size = 40;
+RemoteFaucetSurferReward.faucet_id = 123784;
+RemoteFaucetSurferReward.allow_repeats = true;
+RemoteFaucetSurferReward.allow_reloads = true;
+RemoteFaucetSurferReward.pages_to_visit = 5;
+RemoteFaucetSurferReward.seconds_on_page = 30;
+RemoteFaucetSurferReward.vertical_side = 'bottom'; //may be 'top'; 'bottom'
+RemoteFaucetSurferReward.vertical_offset = '20px';//
+RemoteFaucetSurferReward.horizontal_side = 'right'; //may be 'left';'right'
+RemoteFaucetSurferReward.horizontal_offset = '20px'; //
+RemoteFaucetSurferReward.faucet_extra_styles='width:500px;';

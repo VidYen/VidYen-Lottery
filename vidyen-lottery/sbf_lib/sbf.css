@@ -1,0 +1,53 @@
+/* Simple Bitcoin Faucets */
+
+.sbf_hidden{
+	display:none;
+}
+
+.sbf_button{
+	font-weight: bold;
+}
+
+.sbf_edit{
+	width:100px;
+}
+.sbf_edit_score{
+
+}
+.sbf_edit_faucet{
+
+}
+
+.sbf_edit_pair{
+
+}
+
+.sbf_delete_pair{
+
+}
+
+.sbf_add_pair{
+float: right;
+}
+
+.sbfg_sf_table{
+	border: 2px outset;
+	display: inline-block;
+}
+
+.sbfg_sf_table_header{
+	border: 0px outset;
+	font-weight: bold;
+	text-align: center;
+	font-size:120%;
+}
+
+.sbfg_sf_table_header_field{
+	width:100px;
+	display: inline-block;
+	border: 0px dotted red;
+}
+
+.jconfirm-content , .jconfirm-title {
+	color:black;
+}
