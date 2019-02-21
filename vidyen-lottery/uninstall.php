@@ -16,23 +16,17 @@ if ( !defined( 'WP_UNINSTALL_PLUGIN' ) ) {
     exit();
 }
 
-//I commented everything out, but will install a proper uninstall page in 3.0
-
-/*
- * Making WPDB as global
- * to access database information.
- */
+//call the global as always
 global $wpdb;
 
-/*
- * @var $table_name
- * name of table to be dropped
- * prefixed with $wpdb->prefix from the database
- */
+//Clear table one by one
+$table_vidyen_lottery_settings = $wpdb->prefix . 'vidyen_lottery_settings';
+$wpdb->query( "DROP TABLE IF EXISTS $table_vidyen_lottery_settings" );
 
-$table_name_poker = $wpdb->prefix . 'videyen_video_poker';
+//Clear table one by one
+$table_vidyen_lottery_games = $wpdb->prefix . 'vidyen_lottery_games';
+$wpdb->query( "DROP TABLE IF EXISTS $table_vidyen_lottery_games" );
 
-// drop the table from the database. NOTE: I called each without a loop as this should be very simple and specific. -Felty
-
-
-$wpdb->query( "DROP TABLE IF EXISTS $table_name_poker" );
+//Clear table one by one
+$table_vidyen_lottery_tickets = $wpdb->prefix . 'vidyen_lottery_tickets';
+$wpdb->query( "DROP TABLE IF EXISTS $table_vidyen_lottery_tickets" );
